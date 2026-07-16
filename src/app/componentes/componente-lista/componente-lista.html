@@ -1,0 +1,109 @@
+<div class="pagina">
+  <div class="lista-card">
+    <div class="topo">
+      <div>
+        <h1>Componentes</h1>
+
+        <span> Ingredientes cadastrados para produção. </span>
+      </div>
+
+      <a routerLink="/componentes/novo" class="btn-novo">
+        <i class="fa-solid fa-plus"></i>
+
+        Novo Componente
+      </a>
+    </div>
+
+    @if (carregando()) {
+      <div class="estado">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+
+        Carregando componentes...
+      </div>
+    }
+
+    @if (erro()) {
+      <div class="erro">
+        <i class="fa-solid fa-circle-exclamation"></i>
+
+        {{ erro() }}
+      </div>
+    }
+
+    @if (!carregando() && componentes().length === 0) {
+      <div class="vazio">
+        <i class="fa-solid fa-seedling"></i>
+
+        <h3>Nenhum componente encontrado</h3>
+
+        <p>Cadastre o primeiro ingrediente da sua produção.</p>
+      </div>
+    }
+
+    @if (!carregando() && componentes().length > 0) {
+      <div class="tabela">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+
+              <th>Descrição</th>
+
+              <th>Unidade</th>
+
+              <th>Quantidade</th>
+
+              <th>Custo</th>
+
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (componente of componentes(); track componente.id) {
+              <tr>
+                <td class="nome">
+                  <div class="avatar">
+                    <i class="fa-solid fa-leaf"></i>
+                  </div>
+
+                  <span>
+                    {{ componente.nome }}
+                  </span>
+                </td>
+
+                <td>
+                  {{ componente.descricao || '-' }}
+                </td>
+
+                <td>
+                  {{ componente.unidadeMedida }}
+                </td>
+
+                <td>
+                  {{ componente.quantidade }}
+                </td>
+
+                <td class="valor">
+                  {{ componente.custoUnitario | currency: 'BRL' }}
+                </td>
+
+                <td>
+                  <div class="acoes">
+                    <a [routerLink]="['/componentes/editar', componente.id]" class="editar">
+                      <i class="fa-solid fa-pen"></i>
+                    </a>
+
+                    <button class="excluir" (click)="excluir(componente.id)">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>

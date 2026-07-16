@@ -1,0 +1,230 @@
+$verde: #173a33;
+$verde2: #295146;
+$dourado: #b88a2e;
+$fundo: #f8f5ef;
+$cinza: #6e6e6e;
+
+.pagina {
+  padding: 40px;
+
+  background: $fundo;
+
+  min-height: 100vh;
+}
+
+.lista-card {
+  background: white;
+
+  border-radius: 22px;
+
+  padding: 35px;
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+
+  border: 1px solid rgba(184, 138, 46, 0.18);
+}
+
+.topo {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 35px;
+}
+
+.topo h1 {
+  font-size: 38px;
+
+  color: $verde;
+
+  font-family: 'Cormorant Garamond', serif;
+
+  margin: 0;
+}
+
+.topo span {
+  color: $cinza;
+}
+
+.btn-novo {
+  background: linear-gradient(135deg, $verde, $verde2);
+
+  color: white;
+
+  padding: 14px 24px;
+
+  border-radius: 14px;
+
+  text-decoration: none;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  transition: 0.3s;
+
+  font-weight: 600;
+}
+
+.btn-novo:hover {
+  background: linear-gradient(135deg, #b88a2e, #d7b76d);
+
+  transform: translateY(-2px);
+}
+
+.tabela {
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+thead {
+  background: #f6f3ed;
+}
+
+th {
+  color: $verde;
+
+  padding: 18px;
+
+  text-align: left;
+
+  font-weight: 600;
+}
+
+td {
+  padding: 18px;
+
+  border-bottom: 1px solid #ececec;
+}
+
+tbody tr {
+  transition: 0.25s;
+}
+
+tbody tr:hover {
+  background: #fcfaf6;
+}
+
+.nome {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  font-weight: 600;
+}
+
+.avatar {
+  width: 42px;
+
+  height: 42px;
+
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, #d8bc73, #b88a2e);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  color: white;
+}
+
+.valor {
+  color: $verde;
+
+  font-weight: bold;
+}
+
+.acoes {
+  display: flex;
+
+  gap: 10px;
+}
+
+.acoes a,
+.acoes button {
+  width: 40px;
+
+  height: 40px;
+
+  border-radius: 10px;
+
+  border: none;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  cursor: pointer;
+
+  transition: 0.25s;
+
+  text-decoration: none;
+}
+
+.editar {
+  background: #eef5f2;
+
+  color: $verde;
+}
+
+.editar:hover {
+  background: $verde;
+
+  color: white;
+}
+
+.excluir {
+  background: #fff0ef;
+
+  color: #d32f2f;
+}
+
+.excluir:hover {
+  background: #d32f2f;
+
+  color: white;
+}
+
+.estado,
+.erro,
+.vazio {
+  padding: 60px;
+
+  text-align: center;
+
+  color: $cinza;
+}
+
+.vazio i {
+  font-size: 70px;
+
+  color: $dourado;
+
+  margin-bottom: 20px;
+}
+
+.erro {
+  background: #fff4f4;
+
+  border-left: 5px solid #c62828;
+
+  border-radius: 12px;
+
+  color: #c62828;
+}

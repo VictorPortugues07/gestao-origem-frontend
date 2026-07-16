@@ -1,0 +1,73 @@
+<div class="pagina">
+  <div class="componente-card">
+    <div class="header">
+      <div class="logo-icon">
+        <i class="fa-solid fa-leaf"></i>
+      </div>
+
+      <h2>
+        {{ modoEdicao() ? 'Editar Componente' : 'Novo Componente' }}
+      </h2>
+
+      <p>Cadastre os ingredientes utilizados em suas formulações.</p>
+    </div>
+
+    @if (erro()) {
+      <div class="erro-box">
+        {{ erro() }}
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="salvar()">
+      <div class="campo">
+        <label>Nome</label>
+        <input type="text" placeholder="Ex: Óleo Essencial de Lavanda" formControlName="nome" />
+
+        @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
+          <span class="campo-erro"> Informe o nome do componente. </span>
+        }
+      </div>
+
+      <div class="campo">
+        <label>Descrição</label>
+
+        <textarea rows="4" placeholder="Descrição opcional..." formControlName="descricao">
+        </textarea>
+      </div>
+
+      <div class="linha">
+        <div class="campo">
+          <label>Unidade</label>
+
+          <input placeholder="ml" formControlName="unidadeMedida" />
+
+          @if (form.get('unidadeMedida')?.invalid && form.get('unidadeMedida')?.touched) {
+            <span class="campo-erro"> Obrigatório </span>
+          }
+        </div>
+
+        <div class="campo">
+          <label>Quantidade</label>
+
+          <input type="number" step="0.01" formControlName="quantidade" />
+        </div>
+      </div>
+
+      <div class="campo">
+        <label>Custo Unitário (R$)</label>
+
+        <input type="number" step="0.01" formControlName="custoUnitario" />
+
+        @if (form.get('custoUnitario')?.invalid && form.get('custoUnitario')?.touched) {
+          <span class="campo-erro"> Valor inválido. </span>
+        }
+      </div>
+
+      <div class="acoes">
+        <button type="button" class="btn-outline" (click)="cancelar()">Cancelar</button>
+
+        <button type="submit" class="btn-primary">Salvar Componente</button>
+      </div>
+    </form>
+  </div>
+</div>

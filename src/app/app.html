@@ -1,0 +1,37 @@
+<header class="topbar">
+  <div class="logo-area">
+    <div class="logo">
+      <i class="fa-solid fa-leaf"></i>
+    </div>
+
+    <div>
+      <h1>Botica Origem</h1>
+
+      <span>Cosméticos Artesanais</span>
+    </div>
+  </div>
+
+  <div class="usuario">
+    <i class="fa-solid fa-circle-user"></i>
+
+    <span>Administrador</span>
+  </div>
+</header>
+
+<nav class="navbar">
+  <a routerLink="/produtos" routerLinkActive="ativo">
+    <i class="fa-solid fa-box-open"></i>
+
+    Produtos
+  </a>
+
+  <a routerLink="/componentes" routerLinkActive="ativo">
+    <i class="fa-solid fa-leaf"></i>
+
+    Componentes
+  </a>
+</nav>
+
+<main class="conteudo">
+  <router-outlet></router-outlet>
+</main>

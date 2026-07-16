@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Poppins:wght@300;400;500;600&display=swap');
+
+$verde: #173a33;
+$verde2: #295146;
+$dourado: #b88a2e;
+$creme: #f8f5ef;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+
+  font-family: Poppins;
+
+  background: $creme;
+}
+
+.topbar {
+  height: 90px;
+
+  background: linear-gradient(135deg, #173a33, #295146);
+
+  color: white;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 0 40px;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+}
+
+.logo-area {
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+}
+
+.logo {
+  width: 60px;
+
+  height: 60px;
+
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, #d8bc70, #b88a2e);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  font-size: 24px;
+}
+
+.logo-area h1 {
+  margin: 0;
+
+  font-family: 'Cormorant Garamond', serif;
+
+  font-size: 34px;
+}
+
+.logo-area span {
+  color: #e7ddc9;
+
+  font-size: 14px;
+
+  letter-spacing: 1px;
+}
+
+.usuario {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  font-size: 15px;
+}
+
+.usuario i {
+  font-size: 34px;
+
+  color: #d8bc70;
+}
+
+.navbar {
+  background: white;
+
+  display: flex;
+
+  gap: 12px;
+
+  padding: 16px 40px;
+
+  border-bottom: 1px solid rgba(184, 138, 46, 0.15);
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.navbar a {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  text-decoration: none;
+
+  color: $verde;
+
+  font-weight: 500;
+
+  padding: 12px 18px;
+
+  border-radius: 12px;
+
+  transition: 0.3s;
+}
+
+.navbar a:hover {
+  background: #f5f1e8;
+}
+
+.navbar a.ativo {
+  background: linear-gradient(135deg, #173a33, #295146);
+
+  color: white;
+}
+
+.navbar a.ativo i {
+  color: #d8bc70;
+}
+
+.conteudo {
+  padding: 35px;
+
+  background: linear-gradient(180deg, #fcfaf5, #f5f1e8);
+
+  min-height: calc(100vh - 150px);
+}
