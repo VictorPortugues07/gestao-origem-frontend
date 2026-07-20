@@ -1,0 +1,87 @@
+<div class="pagina">
+  <div class="embalagem-card">
+    <div class="header">
+      <div class="logo-icon"><i class="fa-solid fa-box"></i></div>
+      <h2>{{ modoEdicao() ? 'Editar Embalagem' : 'Nova Embalagem' }}</h2>
+      <p>Frascos, tampas, rótulos e caixas.</p>
+    </div>
+
+    @if (erro()) {
+      <div class="erro-box">{{ erro() }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="salvar()">
+      <div class="campo">
+        <label>Nome</label>
+        <input type="text" placeholder="Ex: Frasco âmbar 30ml" formControlName="nome" />
+        @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
+          <span class="campo-erro">Informe o nome.</span>
+        }
+      </div>
+
+      <div class="linha">
+        <div class="campo">
+          <label>Tipo</label>
+          <select formControlName="tipo">
+            <option value="" disabled>Selecione o tipo</option>
+            @for (tipo of tipos; track tipo) {
+              <option [value]="tipo">{{ tipo }}</option>
+            }
+          </select>
+          @if (form.get('tipo')?.invalid && form.get('tipo')?.touched) {
+            <span class="campo-erro">Selecione um tipo.</span>
+          }
+        </div>
+
+        <div class="campo">
+          <label>Cor</label>
+          <input type="text" formControlName="cor" />
+        </div>
+
+        <div class="campo">
+          <label>Volume (ml)</label>
+          <input type="number" step="0.01" formControlName="volumeMl" />
+        </div>
+      </div>
+
+      <div class="linha">
+        <div class="campo">
+          <label>Estoque Atual</label>
+          <input type="number" formControlName="quantidadeEstoque" />
+        </div>
+
+        <div class="campo">
+          <label>Estoque Mínimo</label>
+          <input type="number" formControlName="estoqueMinimo" />
+        </div>
+
+        <div class="campo">
+          <label>Custo Unitário</label>
+          <input type="number" step="0.01" formControlName="custoUnitario" />
+        </div>
+      </div>
+
+      <div class="campo">
+        <label>Fornecedor</label>
+        <select formControlName="fornecedorId">
+          <option [ngValue]="null">Selecione o fornecedor</option>
+          @for (fornecedor of fornecedores(); track fornecedor.id) {
+            <option [ngValue]="fornecedor.id">{{ fornecedor.nome }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="campo campo-checkbox">
+        <label>
+          <input type="checkbox" formControlName="ativo" />
+          Ativo
+        </label>
+      </div>
+
+      <div class="acoes">
+        <button type="button" class="btn-outline" (click)="cancelar()">Cancelar</button>
+        <button type="submit" class="btn-primary">Salvar Embalagem</button>
+      </div>
+    </form>
+  </div>
+</div>

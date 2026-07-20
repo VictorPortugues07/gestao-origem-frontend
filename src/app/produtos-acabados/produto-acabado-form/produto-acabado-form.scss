@@ -15,9 +15,9 @@ $cinza: #707070;
   padding: 50px;
 }
 
-.categoria-card {
+.produto-card {
   width: 100%;
-  max-width: 620px;
+  max-width: 780px;
   background: white;
   border-radius: 22px;
   padding: 40px;
@@ -68,6 +68,10 @@ form {
   gap: 20px;
 }
 
+.linha:has(.campo:nth-child(3)) {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
 .campo {
   display: flex;
   flex-direction: column;
@@ -104,6 +108,19 @@ select:focus {
   border-color: $dourado;
   background: white;
   box-shadow: 0 0 0 4px rgba(184, 138, 46, 0.15);
+}
+
+.campo-checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.campo-checkbox input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  padding: 0;
 }
 
 .campo-erro {
@@ -162,11 +179,12 @@ button {
 }
 
 @media (max-width: 768px) {
-  .linha {
+  .linha,
+  .linha:has(.campo:nth-child(3)) {
     grid-template-columns: 1fr;
   }
 
-  .categoria-card {
+  .produto-card {
     padding: 25px;
   }
 }

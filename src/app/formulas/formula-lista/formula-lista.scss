@@ -1,0 +1,192 @@
+$verde: #173a33;
+$verde2: #295146;
+$dourado: #b88a2e;
+$fundo: #f8f5ef;
+$cinza: #6f6f6f;
+
+.pagina {
+  padding: 40px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #fcfaf5, #f5f1e8);
+}
+
+.lista-card {
+  background: white;
+  border-radius: 22px;
+  padding: 35px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(184, 138, 46, 0.18);
+}
+
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+}
+
+.topo h1 {
+  margin: 0;
+  color: $verde;
+  font-size: 40px;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.topo span {
+  color: $cinza;
+  font-family: Poppins;
+}
+
+.btn-novo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  padding: 14px 24px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, $verde, $verde2);
+  color: white;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-novo:hover {
+  background: linear-gradient(135deg, #b88a2e, #d7bc70);
+  transform: translateY(-2px);
+}
+
+.tabela {
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #f6f2eb;
+}
+
+th {
+  color: $verde;
+  text-align: left;
+  padding: 18px;
+  font-weight: 600;
+}
+
+td {
+  padding: 18px;
+  border-bottom: 1px solid #ececec;
+}
+
+tbody tr {
+  transition: 0.25s;
+}
+
+tbody tr:hover {
+  background: #fcfaf6;
+}
+
+.nome {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: 600;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $verde2, $verde);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.acoes {
+  display: flex;
+  gap: 10px;
+}
+
+.acoes a,
+.acoes button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+  text-decoration: none;
+  background: #eef5f2;
+  color: $verde;
+}
+
+.acoes button[title='Produzir'] {
+  background: linear-gradient(135deg, $dourado, #d8bc70);
+  color: white;
+}
+
+.acoes button[title='Produzir']:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(184, 138, 46, 0.35);
+}
+
+.editar {
+  background: #eef5f2;
+  color: $verde;
+}
+
+.editar:hover {
+  background: $verde;
+  color: white;
+}
+
+.excluir {
+  background: #fff0ef;
+  color: #c62828;
+}
+
+.excluir:hover {
+  background: #c62828;
+  color: white;
+}
+
+.estado,
+.erro,
+.vazio {
+  padding: 60px;
+  text-align: center;
+  color: $cinza;
+}
+
+.vazio i {
+  font-size: 70px;
+  color: $dourado;
+  margin-bottom: 20px;
+}
+
+.erro {
+  background: #fff5f5;
+  border-left: 5px solid #c62828;
+  border-radius: 12px;
+  color: #c62828;
+}
+
+@media (max-width: 768px) {
+  .topo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  table {
+    min-width: 700px;
+  }
+}

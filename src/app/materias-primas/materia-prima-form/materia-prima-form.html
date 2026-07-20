@@ -1,0 +1,164 @@
+<div class="pagina">
+  <div class="materia-prima-card">
+    <div class="header">
+      <div class="logo-icon"><i class="fa-solid fa-flask"></i></div>
+      <h2>{{ modoEdicao() ? 'Editar Matéria-Prima' : 'Nova Matéria-Prima' }}</h2>
+      <p>Insumo utilizado na produção das fórmulas.</p>
+    </div>
+
+    @if (erro()) {
+      <div class="erro-box">{{ erro() }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="salvar()">
+      <div class="linha">
+        <div class="campo">
+          <label>SKU</label>
+          <input type="text" formControlName="sku" />
+        </div>
+
+        <div class="campo">
+          <label>Nome</label>
+          <input type="text" formControlName="nome" />
+          @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
+            <span class="campo-erro">Informe o nome.</span>
+          }
+        </div>
+      </div>
+
+      <div class="campo">
+        <label>Nome INCI</label>
+        <input type="text" placeholder="Nomenclatura internacional" formControlName="nomeInci" />
+      </div>
+
+      <div class="linha">
+        <div class="campo">
+          <label>Categoria</label>
+          <select formControlName="categoriaId">
+            <option [ngValue]="null">Selecione a categoria</option>
+            @for (categoria of categorias(); track categoria.id) {
+              <option [ngValue]="categoria.id">{{ categoria.nome }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="campo">
+          <label>Unidade de Medida</label>
+          <select formControlName="unidadeMedida">
+            <option value="" disabled>Selecione</option>
+            @for (unidade of unidades; track unidade) {
+              <option [value]="unidade">{{ unidade }}</option>
+            }
+          </select>
+          @if (form.get('unidadeMedida')?.invalid && form.get('unidadeMedida')?.touched) {
+            <span class="campo-erro">Selecione a unidade.</span>
+          }
+        </div>
+      </div>
+
+      <div class="linha">
+        <div class="campo">
+          <label>Estoque Atual</label>
+          <input type="number" step="0.01" formControlName="quantidadeEstoque" />
+        </div>
+
+        <div class="campo">
+          <label>Estoque Mínimo</label>
+          <input type="number" step="0.01" formControlName="estoqueMinimo" />
+        </div>
+
+        <div class="campo">
+          <label>Estoque Máximo</label>
+          <input type="number" step="0.01" formControlName="estoqueMaximo" />
+        </div>
+      </div>
+
+      <div class="linha">
+        <div class="campo">
+          <label>Localização</label>
+          <input type="text" placeholder="Ex: Prateleira A2" formControlName="localizacao" />
+        </div>
+
+        <div class="campo">
+          <label>Lote Atual</label>
+          <input type="text" formControlName="loteAtual" />
+        </div>
+      </div>
+
+      <div class="linha">
+        <div class="campo">
+          <label>Data de Fabricação</label>
+          <input type="date" formControlName="dataFabricacao" />
+        </div>
+
+        <div class="campo">
+          <label>Data de Validade</label>
+          <input type="date" formControlName="dataValidade" />
+        </div>
+      </div>
+
+      <div class="linha">
+        <div class="campo">
+          <label>Fornecedor</label>
+          <select formControlName="fornecedorId">
+            <option [ngValue]="null">Selecione o fornecedor</option>
+            @for (fornecedor of fornecedores(); track fornecedor.id) {
+              <option [ngValue]="fornecedor.id">{{ fornecedor.nome }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="campo">
+          <label>Código no Fornecedor</label>
+          <input type="text" formControlName="codigoFornecedor" />
+        </div>
+      </div>
+
+      <div class="linha">
+        <div class="campo">
+          <label>Preço de Compra</label>
+          <input type="number" step="0.01" formControlName="precoCompra" />
+        </div>
+
+        <div class="campo">
+          <label>Data da Última Compra</label>
+          <input type="date" formControlName="dataUltimaCompra" />
+        </div>
+      </div>
+
+      <div class="linha">
+        <div class="campo">
+          <label>Densidade</label>
+          <input type="number" step="0.0001" formControlName="densidade" />
+        </div>
+
+        <div class="campo">
+          <label>pH Recomendado</label>
+          <input type="text" formControlName="phRecomendado" />
+        </div>
+
+        <div class="campo">
+          <label>Solubilidade</label>
+          <input type="text" formControlName="solubilidade" />
+        </div>
+      </div>
+
+      <div class="campo">
+        <label>Observações</label>
+        <textarea rows="3" formControlName="observacoes"></textarea>
+      </div>
+
+      <div class="campo campo-checkbox">
+        <label>
+          <input type="checkbox" formControlName="ativo" />
+          Ativo
+        </label>
+      </div>
+
+      <div class="acoes">
+        <button type="button" class="btn-outline" (click)="cancelar()">Cancelar</button>
+        <button type="submit" class="btn-primary">Salvar Matéria-Prima</button>
+      </div>
+    </form>
+  </div>
+</div>

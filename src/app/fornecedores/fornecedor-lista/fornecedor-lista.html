@@ -1,0 +1,78 @@
+<div class="pagina">
+  <div class="lista-card">
+    <div class="topo">
+      <div>
+        <h1>Fornecedores</h1>
+        <span>Fornecedores de matérias-primas e embalagens.</span>
+      </div>
+
+      <a routerLink="/fornecedores/novo" class="btn-novo">
+        <i class="fa-solid fa-plus"></i>
+        Novo Fornecedor
+      </a>
+    </div>
+
+    @if (carregando()) {
+      <div class="estado">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Carregando fornecedores...
+      </div>
+    }
+
+    @if (erro()) {
+      <div class="erro">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        {{ erro() }}
+      </div>
+    }
+
+    @if (!carregando() && fornecedores().length === 0) {
+      <div class="vazio">
+        <i class="fa-solid fa-truck"></i>
+        <h3>Nenhum fornecedor cadastrado</h3>
+        <p>Cadastre seu primeiro fornecedor.</p>
+      </div>
+    }
+
+    @if (!carregando() && fornecedores().length > 0) {
+      <div class="tabela">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>CNPJ</th>
+              <th>Contato</th>
+              <th>Telefone</th>
+              <th>Email</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (fornecedor of fornecedores(); track fornecedor.id) {
+              <tr>
+                <td class="nome">
+                  <div class="avatar"><i class="fa-solid fa-truck"></i></div>
+                  <span>{{ fornecedor.nome }}</span>
+                </td>
+                <td>{{ fornecedor.cnpj || '-' }}</td>
+                <td>{{ fornecedor.contato || '-' }}</td>
+                <td>{{ fornecedor.telefone || '-' }}</td>
+                <td>{{ fornecedor.email || '-' }}</td>
+                <td>
+                  <div class="acoes">
+                    <a [routerLink]="['/fornecedores/editar', fornecedor.id]" class="editar">
+                      <i class="fa-solid fa-pen"></i>
+                    </a>
+                    <button class="excluir" (click)="excluir(fornecedor.id)">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>

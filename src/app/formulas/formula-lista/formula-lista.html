@@ -1,0 +1,81 @@
+<div class="pagina">
+  <div class="lista-card">
+    <div class="topo">
+      <div>
+        <h1>Fórmulas</h1>
+        <span>Composição dos produtos acabados e produção.</span>
+      </div>
+
+      <a routerLink="/formulas/novo" class="btn-novo">
+        <i class="fa-solid fa-plus"></i>
+        Nova Fórmula
+      </a>
+    </div>
+
+    @if (carregando()) {
+      <div class="estado">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Carregando fórmulas...
+      </div>
+    }
+
+    @if (erro()) {
+      <div class="erro">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        {{ erro() }}
+      </div>
+    }
+
+    @if (!carregando() && formulas().length === 0) {
+      <div class="vazio">
+        <i class="fa-solid fa-flask-vial"></i>
+        <h3>Nenhuma fórmula cadastrada</h3>
+        <p>Cadastre a primeira fórmula.</p>
+      </div>
+    }
+
+    @if (!carregando() && formulas().length > 0) {
+      <div class="tabela">
+        <table>
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Rendimento</th>
+              <th>Itens</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (formula of formulas(); track formula.id) {
+              <tr>
+                <td class="nome">
+                  <div class="avatar"><i class="fa-solid fa-flask-vial"></i></div>
+                  <span>{{ formula.produtoAcabadoNome }}</span>
+                </td>
+                <td>{{ formula.rendimento || '-' }}</td>
+                <td>{{ formula.itens.length }} item(ns)</td>
+                <td>
+                  <div class="acoes">
+                    <button class="editar" title="Produzir" (click)="produzir(formula)">
+                      <i class="fa-solid fa-industry"></i>
+                    </button>
+                    <a
+                      [routerLink]="['/formulas/editar', formula.id]"
+                      class="editar"
+                      title="Editar"
+                    >
+                      <i class="fa-solid fa-pen"></i>
+                    </a>
+                    <button class="excluir" title="Excluir" (click)="excluir(formula.id)">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>

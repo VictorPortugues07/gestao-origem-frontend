@@ -1,0 +1,102 @@
+<div class="pagina">
+  <div class="formula-card">
+    <div class="header">
+      <div class="logo-icon"><i class="fa-solid fa-flask-vial"></i></div>
+      <h2>{{ modoEdicao() ? 'Editar Fórmula' : 'Nova Fórmula' }}</h2>
+      <p>Defina os insumos e embalagens usados no produto.</p>
+    </div>
+
+    @if (erro()) {
+      <div class="erro-box">{{ erro() }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="salvar()">
+      <div class="linha">
+        <div class="campo">
+          <label>Produto Acabado</label>
+          <select formControlName="produtoAcabadoId">
+            <option [ngValue]="null">Selecione o produto</option>
+            @for (produto of produtos(); track produto.id) {
+              <option [ngValue]="produto.id">{{ produto.nome }}</option>
+            }
+          </select>
+          @if (form.get('produtoAcabadoId')?.invalid && form.get('produtoAcabadoId')?.touched) {
+            <span class="campo-erro">Selecione o produto.</span>
+          }
+        </div>
+
+        <div class="campo">
+          <label>Rendimento</label>
+          <input type="number" formControlName="rendimento" />
+        </div>
+      </div>
+
+      <div class="campo">
+        <label>Observações</label>
+        <textarea rows="2" formControlName="observacoes"></textarea>
+      </div>
+
+      <div class="itens-formula" formArrayName="itens">
+        <div class="itens-topo">
+          <h3>Itens da Fórmula</h3>
+          <button type="button" class="btn-outline" (click)="adicionarItem()">
+            <i class="fa-solid fa-plus"></i> Adicionar item
+          </button>
+        </div>
+
+        @for (item of itens.controls; track $index; let i = $index) {
+          <div class="item-linha" [formGroupName]="i">
+            <div class="campo">
+              <label>Tipo</label>
+              <select formControlName="tipo">
+                @for (tipo of tiposItem; track tipo) {
+                  <option [value]="tipo">{{ tipo }}</option>
+                }
+              </select>
+            </div>
+
+            @if (item.get('tipo')?.value === 'MATERIA_PRIMA') {
+              <div class="campo">
+                <label>Matéria-Prima</label>
+                <select formControlName="materiaPrimaId">
+                  <option [ngValue]="null">Selecione</option>
+                  @for (mp of materiasPrimas(); track mp.id) {
+                    <option [ngValue]="mp.id">{{ mp.nome }}</option>
+                  }
+                </select>
+              </div>
+            } @else {
+              <div class="campo">
+                <label>Embalagem</label>
+                <select formControlName="embalagemId">
+                  <option [ngValue]="null">Selecione</option>
+                  @for (emb of embalagens(); track emb.id) {
+                    <option [ngValue]="emb.id">{{ emb.nome }}</option>
+                  }
+                </select>
+              </div>
+            }
+
+            <div class="campo">
+              <label>Quantidade</label>
+              <input type="number" step="0.0001" formControlName="quantidade" />
+            </div>
+
+            <button type="button" class="excluir" (click)="removerItem(i)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        }
+
+        @if (itens.length === 0) {
+          <p class="campo-erro">Adicione ao menos um item.</p>
+        }
+      </div>
+
+      <div class="acoes">
+        <button type="button" class="btn-outline" (click)="cancelar()">Cancelar</button>
+        <button type="submit" class="btn-primary">Salvar Fórmula</button>
+      </div>
+    </form>
+  </div>
+</div>

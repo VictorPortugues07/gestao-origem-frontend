@@ -1,0 +1,120 @@
+<div class="pagina">
+  <div class="produto-card">
+    <div class="header">
+      <div class="logo-icon"><i class="fa-solid fa-spray-can"></i></div>
+      <h2>{{ modoEdicao() ? 'Editar Produto' : 'Novo Produto Acabado' }}</h2>
+      <p>Produto final pronto para venda.</p>
+    </div>
+
+    @if (erro()) {
+      <div class="erro-box">{{ erro() }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="salvar()">
+      <div class="linha">
+        <div class="campo">
+          <label>Código</label>
+          <input type="text" formControlName="codigo" />
+        </div>
+
+        <div class="campo">
+          <label>Nome</label>
+          <input type="text" formControlName="nome" />
+          @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
+            <span class="campo-erro">Informe o nome.</span>
+          }
+        </div>
+      </div>
+
+      <div class="campo">
+        <label>Categoria</label>
+        <select formControlName="categoriaId">
+          <option [ngValue]="null">Selecione a categoria</option>
+          @for (categoria of categorias(); track categoria.id) {
+            <option [ngValue]="categoria.id">{{ categoria.nome }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="campo">
+        <label>Descrição</label>
+        <textarea rows="3" formControlName="descricao"></textarea>
+      </div>
+
+      <div class="linha">
+        <div class="campo">
+          <label>Peso</label>
+          <input type="number" step="0.01" formControlName="peso" />
+        </div>
+
+        <div class="campo">
+          <label>Volume</label>
+          <input type="number" step="0.01" formControlName="volume" />
+        </div>
+
+        <div class="campo">
+          <label>Unidade de Medida</label>
+          <select formControlName="unidadeMedida">
+            <option value="">Selecione</option>
+            @for (unidade of unidades; track unidade) {
+              <option [value]="unidade">{{ unidade }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="linha">
+        <div class="campo">
+          <label>Estoque Atual</label>
+          <input type="number" formControlName="quantidadeEstoque" />
+        </div>
+
+        <div class="campo">
+          <label>Estoque Mínimo</label>
+          <input type="number" formControlName="estoqueMinimo" />
+        </div>
+
+        <div class="campo">
+          <label>Estoque Máximo</label>
+          <input type="number" formControlName="estoqueMaximo" />
+        </div>
+      </div>
+
+      <div class="linha">
+        <div class="campo">
+          <label>Preço de Custo</label>
+          <input type="number" step="0.01" formControlName="precoCusto" />
+        </div>
+
+        <div class="campo">
+          <label>Preço de Venda</label>
+          <input type="number" step="0.01" formControlName="precoVenda" />
+        </div>
+      </div>
+
+      <div class="linha">
+        <div class="campo">
+          <label>Código de Barras</label>
+          <input type="text" formControlName="codigoBarras" />
+        </div>
+
+        <div class="campo">
+          <label>Foto (URL)</label>
+          <input type="text" formControlName="foto" />
+        </div>
+      </div>
+
+      <div class="campo campo-checkbox">
+        <label>
+          <input type="checkbox" formControlName="ativo" />
+          Ativo
+        </label>
+      </div>
+
+      <div class="acoes">
+        <button type="button" class="btn-outline" (click)="cancelar()">Cancelar</button>
+        <button type="submit" class="btn-primary">Salvar Produto</button>
+      </div>
+    </form>
+  </div>
+</div>

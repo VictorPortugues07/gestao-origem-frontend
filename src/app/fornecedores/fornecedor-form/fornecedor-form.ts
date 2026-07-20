@@ -2,23 +2,23 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProdutoService } from '../produto';
+import { FornecedorService } from '../fornecedor';
 
 @Component({
-  selector: 'app-produto-form',
+  selector: 'app-fornecedor-form',
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './produto-form.html',
-  styleUrl: './produto-form.scss',
+  templateUrl: './fornecedor-form.html',
+  styleUrl: './fornecedor-form.scss',
 })
-export class ProdutoForm implements OnInit {
+export class FornecedorForm implements OnInit {
   form!: FormGroup;
   modoEdicao = signal(false);
-  produtoId?: number;
+  fornecedorId?: number;
   erro = signal('');
 
   constructor(
     private fb: FormBuilder,
-    private produtoService: ProdutoService,
+    private fornecedorService: FornecedorService,
     private route: ActivatedRoute,
     private router: Router,
   ) {}
@@ -26,24 +26,27 @@ export class ProdutoForm implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       nome: ['', Validators.required],
-      descricao: [''],
-      valor: [0, [Validators.required, Validators.min(0.01)]],
-      quantidade: [0, [Validators.required, Validators.min(0)]],
+      cnpj: [''],
+      contato: [''],
+      telefone: [''],
+      email: ['', Validators.email],
+      endereco: [''],
+      observacoes: [''],
     });
 
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.modoEdicao.set(true);
-      this.produtoId = Number(id);
-      this.carregarProduto(this.produtoId);
+      this.fornecedorId = Number(id);
+      this.carregarFornecedor(this.fornecedorId);
     }
   }
 
-  carregarProduto(id: number): void {
-    this.produtoService.buscarPorId(id).subscribe({
-      next: (produto) => this.form.patchValue(produto),
+  carregarFornecedor(id: number): void {
+    this.fornecedorService.buscarPorId(id).subscribe({
+      next: (fornecedor) => this.form.patchValue(fornecedor),
       error: (err) => {
-        this.erro.set('Erro ao carregar produto.');
+        this.erro.set('Erro ao carregar fornecedor.');
         console.error(err);
       },
     });
@@ -56,22 +59,21 @@ export class ProdutoForm implements OnInit {
     }
 
     const dados = this.form.value;
-
     const acao =
-      this.modoEdicao() && this.produtoId
-        ? this.produtoService.atualizar(this.produtoId, dados)
-        : this.produtoService.criar(dados);
+      this.modoEdicao() && this.fornecedorId
+        ? this.fornecedorService.atualizar(this.fornecedorId, dados)
+        : this.fornecedorService.criar(dados);
 
     acao.subscribe({
-      next: () => this.router.navigate(['/produtos']),
+      next: () => this.router.navigate(['/fornecedores']),
       error: (err) => {
-        this.erro.set('Erro ao salvar produto.');
+        this.erro.set('Erro ao salvar fornecedor.');
         console.error(err);
       },
     });
   }
 
   cancelar(): void {
-    this.router.navigate(['/produtos']);
+    this.router.navigate(['/fornecedores']);
   }
 }

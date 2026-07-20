@@ -1,0 +1,90 @@
+<div class="pagina">
+  <div class="lista-card">
+    <div class="topo">
+      <div>
+        <h1>Embalagens</h1>
+        <span>Frascos, tampas, rótulos e caixas em estoque.</span>
+      </div>
+
+      <a routerLink="/embalagens/novo" class="btn-novo">
+        <i class="fa-solid fa-plus"></i>
+        Nova Embalagem
+      </a>
+    </div>
+
+    @if (carregando()) {
+      <div class="estado">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Carregando embalagens...
+      </div>
+    }
+
+    @if (erro()) {
+      <div class="erro">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        {{ erro() }}
+      </div>
+    }
+
+    @if (!carregando() && embalagens().length === 0) {
+      <div class="vazio">
+        <i class="fa-solid fa-box"></i>
+        <h3>Nenhuma embalagem cadastrada</h3>
+        <p>Cadastre a primeira embalagem.</p>
+      </div>
+    }
+
+    @if (!carregando() && embalagens().length > 0) {
+      <div class="tabela">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Tipo</th>
+              <th>Cor</th>
+              <th>Volume (ml)</th>
+              <th>Estoque</th>
+              <th>Fornecedor</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of embalagens(); track item.id) {
+              <tr>
+                <td class="nome">
+                  <div class="avatar"><i class="fa-solid fa-box"></i></div>
+                  <span>{{ item.nome }}</span>
+                </td>
+                <td>{{ item.tipo }}</td>
+                <td>{{ item.cor || '-' }}</td>
+                <td>{{ item.volumeMl || '-' }}</td>
+                <td>
+                  <span class="badge" [class.baixo]="item.estoqueBaixo">
+                    {{ item.quantidadeEstoque }}
+                  </span>
+                </td>
+                <td>{{ item.fornecedorNome || '-' }}</td>
+                <td>
+                  <div class="acoes">
+                    <button class="editar" title="Entrada de estoque" (click)="entrada(item)">
+                      <i class="fa-solid fa-arrow-down"></i>
+                    </button>
+                    <button class="editar" title="Saída de estoque" (click)="saida(item)">
+                      <i class="fa-solid fa-arrow-up"></i>
+                    </button>
+                    <a [routerLink]="['/embalagens/editar', item.id]" class="editar" title="Editar">
+                      <i class="fa-solid fa-pen"></i>
+                    </a>
+                    <button class="excluir" title="Excluir" (click)="excluir(item.id)">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>

@@ -15,18 +15,13 @@ $cinza: #707070;
   padding: 50px;
 }
 
-.produto-card {
+.fornecedor-card {
   width: 100%;
-  max-width: 720px;
-
+  max-width: 680px;
   background: white;
-
   border-radius: 22px;
-
   padding: 40px;
-
   border: 1px solid rgba(184, 138, 46, 0.2);
-
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
 }
 
@@ -38,36 +33,26 @@ $cinza: #707070;
 .logo-icon {
   width: 72px;
   height: 72px;
-
   margin: auto auto 18px;
-
   border-radius: 50%;
-
   background: linear-gradient(135deg, #d7bc70, #b88a2e);
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   color: white;
   font-size: 28px;
 }
 
 .header h2 {
   margin: 0;
-
   font-family: 'Cormorant Garamond', serif;
-
   color: $verde;
-
   font-size: 40px;
 }
 
 .header p {
   margin-top: 10px;
-
   color: $cinza;
-
   font-family: Poppins;
 }
 
@@ -90,29 +75,22 @@ form {
 
 label {
   margin-bottom: 8px;
-
   color: $verde;
-
   font-weight: 600;
-
   font-family: Poppins;
 }
 
 input,
-textarea {
+textarea,
+select {
   padding: 15px 18px;
-
   border-radius: 14px;
-
   border: 1px solid #d8d8d8;
-
   background: #fbfbfb;
-
   transition: 0.3s;
-
   font-family: Poppins;
-
   font-size: 15px;
+  color: $verde;
 }
 
 textarea {
@@ -120,91 +98,66 @@ textarea {
 }
 
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
   outline: none;
-
   border-color: $dourado;
-
   background: white;
-
   box-shadow: 0 0 0 4px rgba(184, 138, 46, 0.15);
 }
 
 .campo-erro {
   margin-top: 6px;
-
   color: #b3261e;
-
   font-size: 0.85rem;
 }
 
 .erro-box {
   background: #fff5f5;
-
   border-left: 5px solid #b3261e;
-
   color: #b3261e;
-
   border-radius: 10px;
-
   padding: 15px;
-
   margin-bottom: 25px;
 }
 
 .acoes {
   display: flex;
-
   justify-content: flex-end;
-
   gap: 15px;
-
   margin-top: 10px;
 }
 
 button {
   border: none;
-
   border-radius: 12px;
-
   padding: 14px 30px;
-
   cursor: pointer;
-
   font-family: Poppins;
-
   font-weight: 600;
-
   transition: 0.3s;
 }
 
 .btn-outline {
   background: white;
-
   color: $verde;
-
   border: 1px solid $verde;
 }
 
 .btn-outline:hover {
   background: $verde;
-
   color: white;
 }
 
 .btn-primary {
   background: linear-gradient(135deg, $verde, $verdeClaro);
-
   color: white;
-
   box-shadow: 0 12px 25px rgba(23, 58, 51, 0.25);
 }
 
 .btn-primary:hover {
   background: linear-gradient(135deg, #b88a2e, #d8bc70);
-
   transform: translateY(-2px);
-
   box-shadow: 0 14px 28px rgba(184, 138, 46, 0.35);
 }
 
@@ -213,7 +166,7 @@ button {
     grid-template-columns: 1fr;
   }
 
-  .produto-card {
+  .fornecedor-card {
     padding: 25px;
   }
 }

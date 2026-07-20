@@ -1,0 +1,74 @@
+<div class="pagina">
+  <div class="lista-card">
+    <div class="topo">
+      <div>
+        <h1>Categorias</h1>
+        <span>Categorias de matéria-prima, embalagem e produto acabado.</span>
+      </div>
+
+      <a routerLink="/categorias/novo" class="btn-novo">
+        <i class="fa-solid fa-plus"></i>
+        Nova Categoria
+      </a>
+    </div>
+
+    @if (carregando()) {
+      <div class="estado">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Carregando categorias...
+      </div>
+    }
+
+    @if (erro()) {
+      <div class="erro">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        {{ erro() }}
+      </div>
+    }
+
+    @if (!carregando() && categorias().length === 0) {
+      <div class="vazio">
+        <i class="fa-solid fa-tags"></i>
+        <h3>Nenhuma categoria encontrada</h3>
+        <p>Cadastre a primeira categoria.</p>
+      </div>
+    }
+
+    @if (!carregando() && categorias().length > 0) {
+      <div class="tabela">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Tipo</th>
+              <th>Descrição</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (categoria of categorias(); track categoria.id) {
+              <tr>
+                <td class="nome">
+                  <div class="avatar"><i class="fa-solid fa-tag"></i></div>
+                  <span>{{ categoria.nome }}</span>
+                </td>
+                <td>{{ categoria.tipo }}</td>
+                <td>{{ categoria.descricao || '-' }}</td>
+                <td>
+                  <div class="acoes">
+                    <a [routerLink]="['/categorias/editar', categoria.id]" class="editar">
+                      <i class="fa-solid fa-pen"></i>
+                    </a>
+                    <button class="excluir" (click)="excluir(categoria.id)">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>

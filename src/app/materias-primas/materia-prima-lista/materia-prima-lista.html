@@ -1,0 +1,94 @@
+<div class="pagina">
+  <div class="lista-card">
+    <div class="topo">
+      <div>
+        <h1>Matérias-Primas</h1>
+        <span>Estoque de insumos para produção.</span>
+      </div>
+
+      <a routerLink="/materias-primas/novo" class="btn-novo">
+        <i class="fa-solid fa-plus"></i>
+        Nova Matéria-Prima
+      </a>
+    </div>
+
+    @if (carregando()) {
+      <div class="estado">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Carregando matérias-primas...
+      </div>
+    }
+
+    @if (erro()) {
+      <div class="erro">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        {{ erro() }}
+      </div>
+    }
+
+    @if (!carregando() && materiasPrimas().length === 0) {
+      <div class="vazio">
+        <i class="fa-solid fa-flask"></i>
+        <h3>Nenhuma matéria-prima cadastrada</h3>
+        <p>Cadastre a primeira matéria-prima.</p>
+      </div>
+    }
+
+    @if (!carregando() && materiasPrimas().length > 0) {
+      <div class="tabela">
+        <table>
+          <thead>
+            <tr>
+              <th>SKU</th>
+              <th>Nome</th>
+              <th>Categoria</th>
+              <th>Estoque</th>
+              <th>Fornecedor</th>
+              <th>Validade</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of materiasPrimas(); track item.id) {
+              <tr>
+                <td>{{ item.sku || '-' }}</td>
+                <td class="nome">
+                  <div class="avatar"><i class="fa-solid fa-flask"></i></div>
+                  <span>{{ item.nome }}</span>
+                </td>
+                <td>{{ item.categoriaNome || '-' }}</td>
+                <td>
+                  <span class="badge" [class.baixo]="item.estoqueBaixo">
+                    {{ item.quantidadeEstoque }} {{ item.unidadeMedida }}
+                  </span>
+                </td>
+                <td>{{ item.fornecedorNome || '-' }}</td>
+                <td>{{ item.dataValidade || '-' }}</td>
+                <td>
+                  <div class="acoes">
+                    <button class="editar" title="Entrada de estoque" (click)="entrada(item)">
+                      <i class="fa-solid fa-arrow-down"></i>
+                    </button>
+                    <button class="editar" title="Saída de estoque" (click)="saida(item)">
+                      <i class="fa-solid fa-arrow-up"></i>
+                    </button>
+                    <a
+                      [routerLink]="['/materias-primas/editar', item.id]"
+                      class="editar"
+                      title="Editar"
+                    >
+                      <i class="fa-solid fa-pen"></i>
+                    </a>
+                    <button class="excluir" title="Excluir" (click)="excluir(item.id)">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>
