@@ -26,8 +26,18 @@
         </div>
 
         <div class="campo">
-          <label>Rendimento</label>
+          <label>Rendimento (unidades produzidas)</label>
           <input type="number" formControlName="rendimento" />
+        </div>
+
+        <div class="campo">
+          <label>Peso Final do Lote (g)</label>
+          <input
+            type="number"
+            step="0.01"
+            formControlName="pesoFinalGramas"
+            (input)="onPesoFinalChange()"
+          />
         </div>
       </div>
 
@@ -44,47 +54,98 @@
           </button>
         </div>
 
+        <div class="percentual-resumo" [class]="statusPercentualTotal()">
+          <i class="fa-solid fa-chart-pie"></i>
+          Total de matérias-primas: <strong>{{ percentualTotal() | number: '1.0-2' }}%</strong>
+          @switch (statusPercentualTotal()) {
+            @case ('ok') {
+              <span>— fechou 100% ✓</span>
+            }
+            @case ('abaixo') {
+              <span>— faltam {{ 100 - percentualTotal() | number: '1.0-2' }}% para 100%</span>
+            }
+            @case ('acima') {
+              <span>— excedeu em {{ percentualTotal() - 100 | number: '1.0-2' }}%</span>
+            }
+          }
+        </div>
+
         @for (item of itens.controls; track $index; let i = $index) {
           <div class="item-linha" [formGroupName]="i">
-            <div class="campo">
-              <label>Tipo</label>
-              <select formControlName="tipo">
-                @for (tipo of tiposItem; track tipo) {
-                  <option [value]="tipo">{{ tipo }}</option>
-                }
-              </select>
-            </div>
-
-            @if (item.get('tipo')?.value === 'MATERIA_PRIMA') {
+            <div class="item-linha-topo">
               <div class="campo">
-                <label>Matéria-Prima</label>
-                <select formControlName="materiaPrimaId">
-                  <option [ngValue]="null">Selecione</option>
-                  @for (mp of materiasPrimas(); track mp.id) {
-                    <option [ngValue]="mp.id">{{ mp.nome }}</option>
+                <label>Tipo</label>
+                <select formControlName="tipo">
+                  @for (tipo of tiposItem; track tipo) {
+                    <option [value]="tipo">{{ tipo }}</option>
                   }
                 </select>
               </div>
-            } @else {
-              <div class="campo">
-                <label>Embalagem</label>
-                <select formControlName="embalagemId">
-                  <option [ngValue]="null">Selecione</option>
-                  @for (emb of embalagens(); track emb.id) {
-                    <option [ngValue]="emb.id">{{ emb.nome }}</option>
-                  }
-                </select>
-              </div>
-            }
 
-            <div class="campo">
-              <label>Quantidade</label>
-              <input type="number" step="0.0001" formControlName="quantidade" />
+              @if (ehMateriaPrima(i)) {
+                <div class="campo">
+                  <label>Matéria-Prima</label>
+                  <select formControlName="materiaPrimaId">
+                    <option [ngValue]="null">Selecione</option>
+                    @for (mp of materiasPrimas(); track mp.id) {
+                      <option [ngValue]="mp.id">{{ mp.nome }}</option>
+                    }
+                  </select>
+                </div>
+              } @else {
+                <div class="campo">
+                  <label>Embalagem</label>
+                  <select formControlName="embalagemId">
+                    <option [ngValue]="null">Selecione</option>
+                    @for (emb of embalagens(); track emb.id) {
+                      <option [ngValue]="emb.id">{{ emb.nome }}</option>
+                    }
+                  </select>
+                </div>
+              }
+
+              <button type="button" class="excluir" (click)="removerItem(i)">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
             </div>
 
-            <button type="button" class="excluir" (click)="removerItem(i)">
-              <i class="fa-solid fa-trash"></i>
-            </button>
+            <div class="item-linha-detalhes">
+              <div class="campo">
+                <label>Fase do Processo</label>
+                <input type="text" placeholder="Ex: Fase A - Aquecimento" formControlName="fase" />
+              </div>
+
+              <div class="campo">
+                <label>Função</label>
+                <input
+                  type="text"
+                  placeholder="Ex: Emulsificante, Ativo, Conservante"
+                  formControlName="funcao"
+                />
+              </div>
+
+              @if (ehMateriaPrima(i)) {
+                <div class="campo campo-percentual">
+                  <label>%</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    formControlName="percentual"
+                    (input)="onPercentualChange(i)"
+                  />
+                </div>
+
+                <div class="campo">
+                  <label>Quantidade (g) — automática</label>
+                  <input type="number" step="0.001" formControlName="quantidade" readonly />
+                </div>
+              } @else {
+                <div class="campo">
+                  <label>Quantidade (unidades)</label>
+                  <input type="number" step="1" formControlName="quantidade" />
+                </div>
+              }
+            </div>
           </div>
         }
 

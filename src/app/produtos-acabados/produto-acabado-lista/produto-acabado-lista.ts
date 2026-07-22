@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ProdutoAcabadoService } from '../produto-acabado';
 import { ProdutoAcabado } from '../../core/models/produto-acabado.model';
+import { percentualEstoque, statusEstoque } from '../../core/utils/estoque.util';
 
 @Component({
   selector: 'app-produto-acabado-lista',
@@ -14,6 +15,9 @@ export class ProdutoAcabadoLista implements OnInit {
   produtos = signal<ProdutoAcabado[]>([]);
   carregando = signal(true);
   erro = signal('');
+
+  percentualEstoque = percentualEstoque;
+  statusEstoque = statusEstoque;
 
   constructor(private produtoService: ProdutoAcabadoService) {}
 

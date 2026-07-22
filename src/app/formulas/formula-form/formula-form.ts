@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -28,6 +28,9 @@ export class FormulaForm implements OnInit {
   materiasPrimas = signal<MateriaPrima[]>([]);
   embalagens = signal<Embalagem[]>([]);
 
+  // usado só para forçar recálculo reativo quando o form muda
+  atualizacao = signal(0);
+
   constructor(
     private fb: FormBuilder,
     private formulaService: FormulaService,
@@ -46,9 +49,12 @@ export class FormulaForm implements OnInit {
     this.form = this.fb.group({
       produtoAcabadoId: [null, Validators.required],
       rendimento: [null],
+      pesoFinalGramas: [null],
       observacoes: [''],
       itens: this.fb.array([]),
     });
+
+    this.form.valueChanges.subscribe(() => this.atualizacao.set(Date.now()));
 
     this.produtoService.listarTodos().subscribe({
       next: (dados) => this.produtos.set(dados),
@@ -80,6 +86,9 @@ export class FormulaForm implements OnInit {
       tipo: [item?.tipo ?? TipoItemFormula.MATERIA_PRIMA, Validators.required],
       materiaPrimaId: [item?.materiaPrimaId ?? null],
       embalagemId: [item?.embalagemId ?? null],
+      fase: [item?.fase ?? ''],
+      funcao: [item?.funcao ?? ''],
+      percentual: [item?.percentual ?? null],
       quantidade: [item?.quantidade ?? null, Validators.required],
     });
   }
@@ -92,12 +101,50 @@ export class FormulaForm implements OnInit {
     this.itens.removeAt(index);
   }
 
+  ehMateriaPrima(index: number): boolean {
+    return this.itens.at(index).get('tipo')?.value === TipoItemFormula.MATERIA_PRIMA;
+  }
+
+  // Soma de % de todas as matérias-primas da fórmula (embalagem não entra na conta)
+  percentualTotal(): number {
+    this.atualizacao(); // dependência reativa
+    return this.itens.controls
+      .filter((c) => c.get('tipo')?.value === TipoItemFormula.MATERIA_PRIMA)
+      .reduce((soma, c) => soma + (Number(c.get('percentual')?.value) || 0), 0);
+  }
+
+  statusPercentualTotal(): 'ok' | 'abaixo' | 'acima' {
+    const total = this.percentualTotal();
+    if (Math.abs(total - 100) < 0.01) return 'ok';
+    return total > 100 ? 'acima' : 'abaixo';
+  }
+
+  // Quando o usuário digita a %, calcula a quantidade em gramas automaticamente
+  onPercentualChange(index: number): void {
+    const item = this.itens.at(index);
+    const percentual = Number(item.get('percentual')?.value) || 0;
+    const pesoFinal = Number(this.form.get('pesoFinalGramas')?.value) || 0;
+
+    const quantidade = (percentual / 100) * pesoFinal;
+    item.get('quantidade')?.setValue(Number(quantidade.toFixed(3)), { emitEvent: true });
+  }
+
+  // Se o peso final mudar depois de já ter itens com %, recalcula tudo
+  onPesoFinalChange(): void {
+    this.itens.controls.forEach((_, index) => {
+      if (this.ehMateriaPrima(index) && this.itens.at(index).get('percentual')?.value != null) {
+        this.onPercentualChange(index);
+      }
+    });
+  }
+
   carregarFormula(id: number): void {
     this.formulaService.buscarPorId(id).subscribe({
       next: (formula) => {
         this.form.patchValue({
           produtoAcabadoId: formula.produtoAcabadoId,
           rendimento: formula.rendimento,
+          pesoFinalGramas: formula.pesoFinalGramas,
           observacoes: formula.observacoes,
         });
 

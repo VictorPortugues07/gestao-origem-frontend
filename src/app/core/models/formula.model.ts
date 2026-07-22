@@ -8,6 +8,9 @@ export interface ItemFormula {
   embalagemId?: number | null;
   embalagemNome?: string;
   quantidade: number;
+  fase?: string;
+  funcao?: string;
+  percentual?: number | null;
 }
 
 export interface Formula {
@@ -16,6 +19,7 @@ export interface Formula {
   produtoAcabadoNome?: string;
   rendimento?: number;
   observacoes?: string;
+  pesoFinalGramas?: number | null;
   itens: ItemFormula[];
 }
 

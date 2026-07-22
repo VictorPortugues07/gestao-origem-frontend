@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MateriaPrimaService } from '../materia-prima';
 import { MateriaPrima } from '../../core/models/materia-prima.model';
+import { percentualEstoque, statusEstoque } from '../../core/utils/estoque.util';
 
 @Component({
   selector: 'app-materia-prima-lista',
@@ -14,6 +15,9 @@ export class MateriaPrimaLista implements OnInit {
   materiasPrimas = signal<MateriaPrima[]>([]);
   carregando = signal(true);
   erro = signal('');
+
+  percentualEstoque = percentualEstoque;
+  statusEstoque = statusEstoque;
 
   constructor(private materiaPrimaService: MateriaPrimaService) {}
 

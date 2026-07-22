@@ -188,3 +188,61 @@ button {
     padding: 25px;
   }
 }
+.estoque-box {
+  background: $creme;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.estoque-titulo {
+  display: block;
+  margin-bottom: 14px;
+  color: $verde;
+  font-weight: 600;
+  font-family: Poppins;
+}
+
+.estoque-barra {
+  margin-top: 16px;
+  height: 10px;
+  border-radius: 50px;
+  background: rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.estoque-fill {
+  height: 100%;
+  border-radius: 50px;
+  transition: width 0.3s ease;
+}
+
+.estoque-fill.baixo {
+  background: #c62828;
+}
+
+.estoque-fill.ideal {
+  background: $verdeClaro;
+}
+
+.estoque-fill.alto {
+  background: $dourado;
+}
+
+.estoque-legenda {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.estoque-legenda.baixo {
+  color: #c62828;
+}
+
+.estoque-legenda.ideal {
+  color: $verdeClaro;
+}
+
+.estoque-legenda.alto {
+  color: $dourado;
+}

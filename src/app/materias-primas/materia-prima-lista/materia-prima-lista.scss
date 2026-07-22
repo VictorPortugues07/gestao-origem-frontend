@@ -107,20 +107,6 @@ tbody tr:hover {
   flex-shrink: 0;
 }
 
-.badge {
-  background: #eef5f2;
-  color: $verde;
-  padding: 6px 14px;
-  border-radius: 50px;
-  font-weight: 600;
-  display: inline-block;
-}
-
-.baixo {
-  background: #ffeaea;
-  color: #c62828;
-}
-
 .acoes {
   display: flex;
   gap: 10px;
@@ -138,8 +124,51 @@ tbody tr:hover {
   cursor: pointer;
   transition: 0.3s;
   text-decoration: none;
-  background: #eef5f2;
-  color: $verde;
+  font-size: 15px;
+}
+
+.entrada {
+  background: #eafaf0;
+  color: #1e8e5a;
+}
+
+.entrada:hover {
+  background: #1e8e5a;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.saida {
+  background: #fff4e6;
+  color: #d9822b;
+}
+
+.saida:hover {
+  background: #d9822b;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.entrada {
+  background: #eafaf0;
+  color: #1e8e5a;
+}
+
+.entrada:hover {
+  background: #1e8e5a;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.saida {
+  background: #fff4e6;
+  color: #d9822b;
+}
+
+.saida:hover {
+  background: #d9822b;
+  color: white;
+  transform: translateY(-2px);
 }
 
 .editar {
@@ -181,6 +210,55 @@ tbody tr:hover {
   border-left: 5px solid #c62828;
   border-radius: 12px;
   color: #c62828;
+}
+
+.estoque-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 110px;
+}
+
+.estoque-valor {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.estoque-valor.baixo {
+  color: #c62828;
+}
+
+.estoque-valor.ideal {
+  color: $verde;
+}
+
+.estoque-valor.alto {
+  color: $dourado;
+}
+
+.estoque-barra-mini {
+  height: 6px;
+  border-radius: 50px;
+  background: rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.estoque-fill-mini {
+  height: 100%;
+  border-radius: 50px;
+  transition: width 0.3s ease;
+}
+
+.estoque-fill-mini.baixo {
+  background: #c62828;
+}
+
+.estoque-fill-mini.ideal {
+  background: $verde2;
+}
+
+.estoque-fill-mini.alto {
+  background: $dourado;
 }
 
 @media (max-width: 768px) {

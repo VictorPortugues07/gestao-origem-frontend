@@ -41,7 +41,7 @@
             <tr>
               <th>Produto</th>
               <th>Rendimento</th>
-              <th>Itens</th>
+              <th>Itens da Fórmula</th>
               <th></th>
             </tr>
           </thead>
@@ -53,7 +53,34 @@
                   <span>{{ formula.produtoAcabadoNome }}</span>
                 </td>
                 <td>{{ formula.rendimento || '-' }}</td>
-                <td>{{ formula.itens.length }} item(ns)</td>
+                <td>
+                  <div class="itens-badges">
+                    @for (item of formula.itens; track item.id) {
+                      <span
+                        class="item-badge"
+                        [class.mp]="item.tipo === 'MATERIA_PRIMA'"
+                        [class.emb]="item.tipo === 'EMBALAGEM'"
+                        [title]="item.funcao || ''"
+                      >
+                        <i
+                          class="fa-solid"
+                          [class.fa-flask]="item.tipo === 'MATERIA_PRIMA'"
+                          [class.fa-box]="item.tipo === 'EMBALAGEM'"
+                        ></i>
+                        {{
+                          item.tipo === 'MATERIA_PRIMA' ? item.materiaPrimaNome : item.embalagemNome
+                        }}
+                        <small>
+                          @if (item.tipo === 'MATERIA_PRIMA' && item.percentual) {
+                            ({{ item.percentual }}%)
+                          } @else {
+                            ({{ item.quantidade }})
+                          }
+                        </small>
+                      </span>
+                    }
+                  </div>
+                </td>
                 <td>
                   <div class="acoes">
                     <button class="editar" title="Produzir" (click)="produzir(formula)">

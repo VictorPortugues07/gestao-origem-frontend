@@ -13,8 +13,8 @@
     <form [formGroup]="form" (ngSubmit)="salvar()">
       <div class="linha">
         <div class="campo">
-          <label>SKU</label>
-          <input type="text" formControlName="sku" />
+          <label>SKU (automático)</label>
+          <input type="text" formControlName="sku" readonly />
         </div>
 
         <div class="campo">
@@ -24,11 +24,6 @@
             <span class="campo-erro">Informe o nome.</span>
           }
         </div>
-      </div>
-
-      <div class="campo">
-        <label>Nome INCI</label>
-        <input type="text" placeholder="Nomenclatura internacional" formControlName="nomeInci" />
       </div>
 
       <div class="linha">
@@ -56,48 +51,94 @@
         </div>
       </div>
 
-      <div class="linha">
-        <div class="campo">
-          <label>Estoque Atual</label>
-          <input type="number" step="0.01" formControlName="quantidadeEstoque" />
+      <div class="estoque-box">
+        <label class="estoque-titulo">Controle de Estoque</label>
+
+        <div class="linha">
+          <div class="campo">
+            <label>Estoque Atual</label>
+            <input type="number" step="0.01" formControlName="quantidadeEstoque" />
+          </div>
+
+          <div class="campo">
+            <label>Estoque Mínimo</label>
+            <input type="number" step="0.01" formControlName="estoqueMinimo" />
+          </div>
+
+          <div class="campo">
+            <label>Estoque Máximo</label>
+            <input type="number" step="0.01" formControlName="estoqueMaximo" />
+          </div>
         </div>
 
-        <div class="campo">
-          <label>Estoque Mínimo</label>
-          <input type="number" step="0.01" formControlName="estoqueMinimo" />
+        <div class="estoque-barra">
+          <div
+            class="estoque-fill"
+            [class]="
+              statusEstoque(
+                form.get('quantidadeEstoque')?.value,
+                form.get('estoqueMinimo')?.value,
+                form.get('estoqueMaximo')?.value
+              )
+            "
+            [style.width.%]="
+              percentualEstoque(
+                form.get('quantidadeEstoque')?.value,
+                form.get('estoqueMinimo')?.value,
+                form.get('estoqueMaximo')?.value
+              )
+            "
+          ></div>
         </div>
 
-        <div class="campo">
-          <label>Estoque Máximo</label>
-          <input type="number" step="0.01" formControlName="estoqueMaximo" />
-        </div>
+        <span
+          class="estoque-legenda"
+          [class]="
+            statusEstoque(
+              form.get('quantidadeEstoque')?.value,
+              form.get('estoqueMinimo')?.value,
+              form.get('estoqueMaximo')?.value
+            )
+          "
+        >
+          @switch (
+            statusEstoque(
+              form.get('quantidadeEstoque')?.value,
+              form.get('estoqueMinimo')?.value,
+              form.get('estoqueMaximo')?.value
+            )
+          ) {
+            @case ('baixo') {
+              Estoque baixo — abaixo do mínimo
+            }
+            @case ('alto') {
+              Estoque no limite máximo
+            }
+            @default {
+              Estoque dentro do ideal
+            }
+          }
+        </span>
       </div>
 
       <div class="linha">
-        <div class="campo">
-          <label>Localização</label>
-          <input type="text" placeholder="Ex: Prateleira A2" formControlName="localizacao" />
-        </div>
-
         <div class="campo">
           <label>Lote Atual</label>
           <input type="text" formControlName="loteAtual" />
         </div>
-      </div>
 
-      <div class="linha">
         <div class="campo">
           <label>Data de Fabricação</label>
           <input type="date" formControlName="dataFabricacao" />
         </div>
+      </div>
 
+      <div class="linha">
         <div class="campo">
           <label>Data de Validade</label>
           <input type="date" formControlName="dataValidade" />
         </div>
-      </div>
 
-      <div class="linha">
         <div class="campo">
           <label>Fornecedor</label>
           <select formControlName="fornecedorId">
@@ -106,11 +147,6 @@
               <option [ngValue]="fornecedor.id">{{ fornecedor.nome }}</option>
             }
           </select>
-        </div>
-
-        <div class="campo">
-          <label>Código no Fornecedor</label>
-          <input type="text" formControlName="codigoFornecedor" />
         </div>
       </div>
 
@@ -123,23 +159,6 @@
         <div class="campo">
           <label>Data da Última Compra</label>
           <input type="date" formControlName="dataUltimaCompra" />
-        </div>
-      </div>
-
-      <div class="linha">
-        <div class="campo">
-          <label>Densidade</label>
-          <input type="number" step="0.0001" formControlName="densidade" />
-        </div>
-
-        <div class="campo">
-          <label>pH Recomendado</label>
-          <input type="text" formControlName="phRecomendado" />
-        </div>
-
-        <div class="campo">
-          <label>Solubilidade</label>
-          <input type="text" formControlName="solubilidade" />
         </div>
       </div>
 

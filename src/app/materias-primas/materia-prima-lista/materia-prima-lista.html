@@ -58,29 +58,59 @@
                 </td>
                 <td>{{ item.categoriaNome || '-' }}</td>
                 <td>
-                  <span class="badge" [class.baixo]="item.estoqueBaixo">
-                    {{ item.quantidadeEstoque }} {{ item.unidadeMedida }}
-                  </span>
+                  <div class="estoque-info">
+                    <span
+                      class="estoque-valor"
+                      [class]="
+                        statusEstoque(
+                          item.quantidadeEstoque,
+                          item.estoqueMinimo,
+                          item.estoqueMaximo
+                        )
+                      "
+                    >
+                      {{ item.quantidadeEstoque }} {{ item.unidadeMedida }}
+                    </span>
+                    <div class="estoque-barra-mini">
+                      <div
+                        class="estoque-fill-mini"
+                        [class]="
+                          statusEstoque(
+                            item.quantidadeEstoque,
+                            item.estoqueMinimo,
+                            item.estoqueMaximo
+                          )
+                        "
+                        [style.width.%]="
+                          percentualEstoque(
+                            item.quantidadeEstoque,
+                            item.estoqueMinimo,
+                            item.estoqueMaximo
+                          )
+                        "
+                      ></div>
+                    </div>
+                  </div>
                 </td>
                 <td>{{ item.fornecedorNome || '-' }}</td>
                 <td>{{ item.dataValidade || '-' }}</td>
                 <td>
                   <div class="acoes">
-                    <button class="editar" title="Entrada de estoque" (click)="entrada(item)">
-                      <i class="fa-solid fa-arrow-down"></i>
+                    <button class="entrada" title="Entrada de estoque" (click)="entrada(item)">
+                      <i class="fa-solid fa-circle-plus"></i>
                     </button>
-                    <button class="editar" title="Saída de estoque" (click)="saida(item)">
-                      <i class="fa-solid fa-arrow-up"></i>
+                    <button class="saida" title="Saída de estoque" (click)="saida(item)">
+                      <i class="fa-solid fa-circle-minus"></i>
                     </button>
                     <a
                       [routerLink]="['/materias-primas/editar', item.id]"
                       class="editar"
                       title="Editar"
                     >
-                      <i class="fa-solid fa-pen"></i>
+                      <i class="fa-solid fa-pen-to-square"></i>
                     </a>
                     <button class="excluir" title="Excluir" (click)="excluir(item.id)">
-                      <i class="fa-solid fa-trash"></i>
+                      <i class="fa-solid fa-trash-can"></i>
                     </button>
                   </div>
                 </td>

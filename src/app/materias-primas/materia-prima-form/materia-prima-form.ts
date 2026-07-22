@@ -8,6 +8,8 @@ import { FornecedorService } from '../../fornecedores/fornecedor';
 import { Categoria } from '../../core/models/categoria.model';
 import { Fornecedor } from '../../core/models/fornecedor.model';
 import { UnidadeMedida, CategoriaTipo } from '../../core/models/enums';
+import { percentualEstoque, statusEstoque } from '../../core/utils/estoque.util';
+import { proximoCodigo } from '../../core/utils/codigo.util';
 
 @Component({
   selector: 'app-materia-prima-form',
@@ -24,6 +26,9 @@ export class MateriaPrimaForm implements OnInit {
   categorias = signal<Categoria[]>([]);
   fornecedores = signal<Fornecedor[]>([]);
 
+  percentualEstoque = percentualEstoque;
+  statusEstoque = statusEstoque;
+
   constructor(
     private fb: FormBuilder,
     private materiaPrimaService: MateriaPrimaService,
@@ -37,24 +42,18 @@ export class MateriaPrimaForm implements OnInit {
     this.form = this.fb.group({
       sku: [''],
       nome: ['', Validators.required],
-      nomeInci: [''],
       categoriaId: [null],
       unidadeMedida: ['', Validators.required],
       quantidadeEstoque: [0],
       estoqueMinimo: [0],
       estoqueMaximo: [null],
-      localizacao: [''],
       loteAtual: [''],
       dataFabricacao: [''],
       dataValidade: [''],
       ativo: [true],
       fornecedorId: [null],
-      codigoFornecedor: [''],
       precoCompra: [null],
       dataUltimaCompra: [''],
-      densidade: [null],
-      phRecomendado: [''],
-      solubilidade: [''],
       observacoes: [''],
     });
 
@@ -73,7 +72,22 @@ export class MateriaPrimaForm implements OnInit {
       this.modoEdicao.set(true);
       this.materiaPrimaId = Number(id);
       this.carregarMateriaPrima(this.materiaPrimaId);
+    } else {
+      this.gerarProximoSku();
     }
+  }
+
+  gerarProximoSku(): void {
+    this.materiaPrimaService.listarTodos().subscribe({
+      next: (dados) => {
+        const proximo = proximoCodigo(
+          dados.map((d) => d.sku),
+          'MP',
+        );
+        this.form.patchValue({ sku: proximo });
+      },
+      error: (err) => console.error(err),
+    });
   }
 
   carregarMateriaPrima(id: number): void {

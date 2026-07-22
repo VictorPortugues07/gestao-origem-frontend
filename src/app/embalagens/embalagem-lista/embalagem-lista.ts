@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { EmbalagemService } from '../embalagem';
 import { Embalagem } from '../../core/models/embalagem.model';
+import { percentualEstoque, statusEstoque } from '../../core/utils/estoque.util';
 
 @Component({
   selector: 'app-embalagem-lista',
@@ -14,6 +15,9 @@ export class EmbalagemLista implements OnInit {
   embalagens = signal<Embalagem[]>([]);
   carregando = signal(true);
   erro = signal('');
+
+  percentualEstoque = percentualEstoque;
+  statusEstoque = statusEstoque;
 
   constructor(private embalagemService: EmbalagemService) {}
 
