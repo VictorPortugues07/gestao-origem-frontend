@@ -1,1 +1,58 @@
-/* You can add global styles to this file, and also import other style files */
+/* Estilos globais — Botica Origem */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+  --verde: #173a33;
+  --verde-2: #295146;
+  --dourado: #b88a2e;
+  --dourado-claro: #d8bc70;
+  --creme: #f8f5ef;
+  --cinza: #6f6f6f;
+  --fonte-titulo: 'Cormorant Garamond', serif;
+  --fonte-corpo: 'Poppins', sans-serif;
+
+  /* Padding de página que se adapta ao tamanho da tela, do celular ao desktop */
+  --espaco-pagina: clamp(16px, 4vw, 40px);
+  --espaco-cartao: clamp(18px, 3vw, 35px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fonte-corpo);
+  background: var(--creme);
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.tabela {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tabela::-webkit-scrollbar {
+  height: 8px;
+}
+
+.tabela::-webkit-scrollbar-thumb {
+  background: rgba(184, 138, 46, 0.35);
+  border-radius: 8px;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  button,
+  a {
+    min-height: 40px;
+  }
+}

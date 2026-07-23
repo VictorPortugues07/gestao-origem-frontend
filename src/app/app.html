@@ -1,8 +1,6 @@
 <header class="topbar">
   <div class="logo-area">
-    <div class="logo">
-      <i class="fa-solid fa-leaf"></i>
-    </div>
+    <img src="./assets/logo-icon.png" alt="Botica Origem" class="logo" width="60" height="60" />
 
     <div>
       <h1>Botica Origem</h1>
@@ -11,50 +9,70 @@
     </div>
   </div>
 
-  <div class="usuario">
-    <i class="fa-solid fa-circle-user"></i>
+  <div class="topbar-direita">
+    <div class="usuario">
+      <i class="fa-solid fa-circle-user"></i>
 
-    <span>Administrador</span>
+      <span>Administrador</span>
+    </div>
+
+    <button
+      type="button"
+      class="menu-toggle"
+      [class.aberto]="menuAberto()"
+      (click)="alternarMenu()"
+      [attr.aria-expanded]="menuAberto()"
+      aria-label="Abrir menu de navegação"
+      aria-controls="menu-navegacao"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 </header>
 
-<nav class="navbar">
-  <a routerLink="/produtos-acabados" routerLinkActive="ativo">
+<nav class="navbar" id="menu-navegacao" [class.aberto]="menuAberto()">
+  <a routerLink="/produtos-acabados" routerLinkActive="ativo" (click)="fecharMenu()">
     <i class="fa-solid fa-spray-can"></i>
 
     Produtos
   </a>
 
-  <a routerLink="/materias-primas" routerLinkActive="ativo">
+  <a routerLink="/materias-primas" routerLinkActive="ativo" (click)="fecharMenu()">
     <i class="fa-solid fa-flask"></i>
 
     Matérias-Primas
   </a>
 
-  <a routerLink="/embalagens" routerLinkActive="ativo">
+  <a routerLink="/embalagens" routerLinkActive="ativo" (click)="fecharMenu()">
     <i class="fa-solid fa-box"></i>
 
     Embalagens
   </a>
 
-  <a routerLink="/formulas" routerLinkActive="ativo">
+  <a routerLink="/formulas" routerLinkActive="ativo" (click)="fecharMenu()">
     <i class="fa-solid fa-flask-vial"></i>
 
     Fórmulas
   </a>
 
-  <a routerLink="/fornecedores" routerLinkActive="ativo">
+  <a routerLink="/fornecedores" routerLinkActive="ativo" (click)="fecharMenu()">
     <i class="fa-solid fa-truck"></i>
 
     Fornecedores
   </a>
 
-  <a routerLink="/categorias" routerLinkActive="ativo">
+  <a routerLink="/categorias" routerLinkActive="ativo" (click)="fecharMenu()">
     <i class="fa-solid fa-tags"></i>
 
     Categorias
   </a>
 </nav>
+
+@if (menuAberto()) {
+  <div class="menu-overlay" (click)="fecharMenu()"></div>
+}
 
 <main class="conteudo">
   <router-outlet></router-outlet>
